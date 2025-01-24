@@ -18,6 +18,7 @@ import { HardhatUserConfig, HttpNetworkAccountsUserConfig } from 'hardhat/types'
 import { EndpointId } from '@layerzerolabs/lz-definitions'
 
 import './tasks/index'
+import './type-extensions'
 
 // Set your preferred authentication method
 //
@@ -63,6 +64,9 @@ const config: HardhatUserConfig = {
             eid: EndpointId.BASE_V2_MAINNET,
             url: process.env.RPC_URL_BASE || 'https://base.gateway.tenderly.co',
             accounts,
+            oftAdapter: {
+                tokenAddress: '0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b', // Set the token address for the OFT adapter
+            },
         },
         hardhat: {
             // Need this for testing because TestHelperOz5.sol is exceeding the compiled contract size limit

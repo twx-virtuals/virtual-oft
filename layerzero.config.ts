@@ -5,7 +5,7 @@ import {generateConnectionsConfig} from '@layerzerolabs/metadata-tools';
 
 export const baseContract: OmniPointHardhat = {
   eid: EndpointId.BASE_V2_MAINNET,
-  contractName: 'OptimismMintableERC20',
+  contractName: 'VirtualOFTAdapter',
 };
 
 export const solanaContract: OmniPointHardhat = {
