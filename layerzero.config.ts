@@ -68,8 +68,8 @@ export default async function () {
         {
           contract: baseContract,
           config: {
-            delegate: '0x97cF38bB06Da57b6418083998b09976eC40A90a3',
-            owner: '0x97cF38bB06Da57b6418083998b09976eC40A90a3'
+            delegate: '0xE220329659D41B2a9F26E83816B424bDAcF62567',
+            owner: '0xE220329659D41B2a9F26E83816B424bDAcF62567'
           }
         },
         {
