@@ -10,7 +10,7 @@ export const baseContract: OmniPointHardhat = {
 
 export const solanaContract: OmniPointHardhat = {
   eid: EndpointId.SOLANA_V2_MAINNET,
-  address: '7A43abkvMkCox25Xhoas36rHJBWNEYfMfZhttF6FpTYi', // your OFT Store address
+  address: 'AgrZJ5zTrQwkB13cEb7TDjLbe7PR577kTquEkNVemAXX', // your OFT Store address
 };
 
 const EVM_ENFORCED_OPTIONS: OAppEnforcedOption[] = [
@@ -67,16 +67,20 @@ export default async function () {
     contracts: [
         {
           contract: baseContract,
-          config: {
-            delegate: '0xE220329659D41B2a9F26E83816B424bDAcF62567',
-            owner: '0xE220329659D41B2a9F26E83816B424bDAcF62567'
-          }
+          // TODO: uncomment this when ready to transfer delegate - run wire:
+          //       pnpm hardhat lz:oapp:wire --oapp-config layerzero.config.ts --solana-secret-key $SOLANA_PRIVATE_KEY --solana-program-id $SOLANA_PROGRAM_ID
+          // TODO: update owner with:
+          //       pnpm hardhat lz:ownable:transfer-ownership --oapp-config layerzero.config.ts --solana-program-id $SOLANA_PROGRAM_ID --solana-secret-key $SOLANA_PRIVATE_KEY
+          // config: {
+          //   delegate: '0xE220329659D41B2a9F26E83816B424bDAcF62567',
+          //   owner: '0xE220329659D41B2a9F26E83816B424bDAcF62567'
+          // }
         },
         {
           contract: solanaContract,
           config: {
-            delegate: 'c4xoPCx8Qfs4w66Yr7oALToCBBMicQpvZWwtaGoJ4EB',
-            owner: 'c4xoPCx8Qfs4w66Yr7oALToCBBMicQpvZWwtaGoJ4EB'
+            delegate: 'sFjjLFuyvHDXLsMVXC9gdPTsxZBhoixuE7S6FSijV2W',
+            owner: 'sFjjLFuyvHDXLsMVXC9gdPTsxZBhoixuE7S6FSijV2W'
           }
         }
     ],
