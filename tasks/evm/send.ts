@@ -13,23 +13,26 @@ interface TaskArguments {
     amount: string
     to: string
     contractName: string
+    erc20Address: string
 }
 
 const action: ActionType<TaskArguments> = async (
-    { dstEid, amount, to, contractName },
+    { dstEid, amount, to, contractName, erc20Address },
     hre: HardhatRuntimeEnvironment
 ) => {
     const signer = await hre.ethers.getNamedSigner('deployer')
     // @ts-ignore
     const token = (await hre.ethers.getContract(contractName)).connect(signer)
 
-    // if (isSepolia(hre.network.name)) {
-    //     // @ts-ignore
-    //     const erc20Token = (await hre.ethers.getContractAt(IERC20, address)).connect(signer)
-    //     const approvalTxResponse = await erc20Token.approve(token.address, amount)
-    //     const approvalTxReceipt = await approvalTxResponse.wait()
-    //     console.log(`approve: ${amount}: ${approvalTxReceipt.transactionHash}`)
-    // }
+    // @ts-ignore
+    const erc20Token = (await hre.ethers.getContractAt('IERC20', erc20Address)).connect(signer)
+    const allowance = await erc20Token.allowance(signer.address, token.address)
+
+    if (allowance < amount) {
+        const approvalTxResponse = await erc20Token.approve(token.address, amount)
+        const approvalTxReceipt = await approvalTxResponse.wait()
+        console.log(`approve: ${amount}: ${approvalTxReceipt.transactionHash}`)
+    }
 
     const amountLD = BigNumber.from(amount)
     const sendParam = {
@@ -57,4 +60,5 @@ task('send', 'Sends a transaction', action)
     .addParam('dstEid', 'Destination endpoint ID', undefined, types.int, false)
     .addParam('amount', 'Amount to send in wei', undefined, types.string, false)
     .addParam('to', 'Recipient address', undefined, types.string, false)
-    .addOptionalParam('contractName', 'Name of the contract in deployments folder', 'MyOFT', types.string)
+    .addParam('erc20Address', 'ERC20 address', undefined, types.string, false)
+    .addOptionalParam('contractName', 'Name of the contract in deployments folder', 'VirtualOFTAdapter', types.string)
