@@ -13,6 +13,11 @@ export const solanaContract: OmniPointHardhat = {
   address: 'AgrZJ5zTrQwkB13cEb7TDjLbe7PR577kTquEkNVemAXX', // your OFT Store address
 };
 
+export const bscContract: OmniPointHardhat = {
+  eid: EndpointId.BSC_V2_MAINNET,
+  contractName: 'VirtualOFT',
+};
+
 const EVM_ENFORCED_OPTIONS: OAppEnforcedOption[] = [
   {
     msgType: 1,
@@ -61,6 +66,8 @@ const SOLANA_ENFORCED_OPTIONS: OAppEnforcedOption[] = [
 export default async function () {
   const connections = await generateConnectionsConfig([
     [baseContract, solanaContract, [['LayerZero Labs', 'Google'], []], [10, 32], [SOLANA_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+    [baseContract, bscContract, [['LayerZero Labs', 'Google'], []], [10, 20], [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
+    [bscContract, solanaContract, [['LayerZero Labs', 'Google'], []], [10, 32], [SOLANA_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS]],
   ]);
 
   return {
@@ -82,6 +89,9 @@ export default async function () {
             delegate: 'sFjjLFuyvHDXLsMVXC9gdPTsxZBhoixuE7S6FSijV2W',
             owner: 'sFjjLFuyvHDXLsMVXC9gdPTsxZBhoixuE7S6FSijV2W'
           }
+        },
+        {
+          contract: bscContract,
         }
     ],
     connections,
